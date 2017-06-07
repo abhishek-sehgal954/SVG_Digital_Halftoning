@@ -39,8 +39,9 @@ def intensity_2(image):
   #crr=[[0]*(len(arr[0])*3) for i in (range(len(arr))*3)]
   startu=0
   endu=0
-  
-  dwg = svgwrite.Drawing('test.svg', profile='full')
+
+#viewBox=('0 0 3000 3000')
+  dwg = svgwrite.Drawing('test.svg', profile='full',size=('70cm', '70cm'))
   for i in range(len(brr)):
   	for j in range(len(brr[i])):
   		dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+5)/2)),gray_level[brr[i][j]]))
