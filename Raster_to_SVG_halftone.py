@@ -86,42 +86,42 @@ def intensity_triangle(image):
         temp_list.append((startu+5,endu+5))
       elif(brr[i][j]==1):
         #temp_list=[]
-        temp_list.append((int((startu+startu+5)/2),endu-0.1))
+        temp_list.append((int((startu+startu+5)/2),endu+0.1))
         temp_list.append((startu+0.1,endu+5-0.1))
         temp_list.append((startu+5-0.1,endu+5-0.1))
       elif(brr[i][j]==2):
         #temp_list=[]
-        temp_list.append((int((startu+startu+5)/2),endu-0.2))
+        temp_list.append((int((startu+startu+5)/2),endu+0.2))
         temp_list.append((startu+0.2,endu+5-0.2))
         temp_list.append((startu+5-0.2,endu+5-0.2))
       elif(brr[i][j]==3):
         #temp_list=[]
-        temp_list.append((int((startu+startu+5)/2),endu-0.3))
+        temp_list.append((int((startu+startu+5)/2),endu+0.3))
         temp_list.append((startu+0.3,endu+5-0.3))
         temp_list.append((startu+5-0.3,endu+5-0.3))
       elif(brr[i][j]==4):
         #temp_list=[]
-        temp_list.append((int((startu+startu+5)/2),endu-0.4))
+        temp_list.append((int((startu+startu+5)/2),endu+0.4))
         temp_list.append((startu+0.4,endu+5-0.4))
         temp_list.append((startu+5-0.4,endu+5-0.4))
       elif(brr[i][j]==5):
         #temp_list=[]
-        temp_list.append((int((startu+startu+5)/2),endu-0.5))
+        temp_list.append((int((startu+startu+5)/2),endu+0.5))
         temp_list.append((startu+0.5,endu+5-0.5))
         temp_list.append((startu+5-0.5,endu+5-0.5))
       elif(brr[i][j]==6):
         #temp_list=[]
-        temp_list.append((int((startu+startu+5)/2),endu-0.6))
+        temp_list.append((int((startu+startu+5)/2),endu+0.6))
         temp_list.append((startu+0.6,endu+5-0.6))
         temp_list.append((startu+5-0.6,endu+5-0.6))
       elif(brr[i][j]==7):
         #temp_list=[]
-        temp_list.append((int((startu+startu+5)/2),endu-0.7))
+        temp_list.append((int((startu+startu+5)/2),endu+0.7))
         temp_list.append((startu+0.7,endu+5-0.7))
         temp_list.append((startu+5-0.7,endu+5-0.7))
       elif(brr[i][j]==8):
         #temp_list=[]
-        temp_list.append((int((startu+startu+5)/2),endu-0.8))
+        temp_list.append((int((startu+startu+5)/2),endu+0.8))
         temp_list.append((startu+0.8,endu+5-0.8))
         temp_list.append((startu+5-0.8,endu+5-0.8))
       
@@ -139,6 +139,119 @@ def intensity_triangle(image):
   browser=webbrowser.get('firefox')
   browser.open_new('file://' + os.path.realpath("test.svg"))
 
+def intensity_hexagon(image):
+  arr=np.asarray(image)
+  mini=999
+  maxi=0
+  for i in range(len(arr)):
+    for j in range(len(arr[0])):
+      maxi=max(arr[i][j],maxi)
+      mini=min(arr[i][j],mini)
+  level=float(float(maxi-mini)/float(10));
+  brr=[[0]*len(arr[0]) for i in range(len(arr))]
+  for i in range(10):
+    l1=mini+level*i
+    l2=l1+level
+    for j in range(len(arr)):
+      for k in range(len(arr[0])):
+        if(arr[j][k]>=l1 and arr[j][k]<=l2):
+          brr[j][k]=i
+  dwg = svgwrite.Drawing('test.svg', profile='full',size=('70cm', '70cm'))
+  startu=0
+  endu=0
+  for i in range(len(brr)):
+    for j in range(len(brr[i])):
+      temp_list=[]
+      if(brr[i][j]==0):
+       
+        temp_list.append((startu+2,endu))
+        temp_list.append((startu+4,endu))
+        temp_list.append((startu,endu+3))
+        temp_list.append((startu+6,endu+3))
+        temp_list.append((startu+2,endu+3))
+        temp_list.append((startu+4,endu+3))
+      elif(brr[i][j]==1):
+        #temp_list=[]
+        temp_list.append((startu+2,endu+0.2))
+        temp_list.append((startu+4,endu+0.2))
+        temp_list.append((startu+0.2,endu+3))
+        temp_list.append((startu+6-0.2,endu+3))
+        temp_list.append((startu+2,endu+3-0.2))
+        temp_list.append((startu+4,endu+3-0.2))
+      elif(brr[i][j]==2):
+        #temp_list=[]
+        temp_list.append((startu+2,endu+0.4))
+        temp_list.append((startu+4,endu+0.4))
+        temp_list.append((startu+0.4,endu+3))
+        temp_list.append((startu+6-0.4,endu+3))
+        temp_list.append((startu+2,endu+3-0.4))
+        temp_list.append((startu+4,endu+3-0.4))
+      elif(brr[i][j]==3):
+        #temp_list=[]
+        temp_list.append((startu+2,endu+0.6))
+        temp_list.append((startu+4,endu+0.6))
+        temp_list.append((startu+0.6,endu+3))
+        temp_list.append((startu+6-0.6,endu+3))
+        temp_list.append((startu+2,endu+3-0.6))
+        temp_list.append((startu+4,endu+3-0.6))
+      elif(brr[i][j]==4):
+        #temp_list=[]
+        temp_list.append((startu+2,endu+0.8))
+        temp_list.append((startu+4,endu+0.8))
+        temp_list.append((startu+0.8,endu+3))
+        temp_list.append((startu+6-0.8,endu+3))
+        temp_list.append((startu+2,endu+3-0.8))
+        temp_list.append((startu+4,endu+3-0.8))
+      elif(brr[i][j]==5):
+        #temp_list=[]
+        temp_list.append((startu+2,endu+1))
+        temp_list.append((startu+4,endu+1))
+        temp_list.append((startu+1,endu+3))
+        temp_list.append((startu+6-1,endu+3))
+        temp_list.append((startu+2,endu+3-1))
+        temp_list.append((startu+4,endu+3-1))
+      elif(brr[i][j]==6):
+        #temp_list=[]
+        temp_list.append((startu+2,endu+1.2))
+        temp_list.append((startu+4,endu+1.2))
+        temp_list.append((startu+1.2,endu+3))
+        temp_list.append((startu+6-1.2,endu+3))
+        temp_list.append((startu+2,endu+3-1.2))
+        temp_list.append((startu+4,endu+3-1.2))
+
+      elif(brr[i][j]==7):
+        #temp_list=[]
+        temp_list.append((startu+2,endu+1.4))
+        temp_list.append((startu+4,endu+1.4))
+        temp_list.append((startu+1.4,endu+3))
+        temp_list.append((startu+6-1.4,endu+3))
+        temp_list.append((startu+2,endu+3-1.4))
+        temp_list.append((startu+4,endu+3-1.4))     
+
+      elif(brr[i][j]==8):
+        #temp_list=[]
+        temp_list.append((startu+2,endu+1.6))
+        temp_list.append((startu+4,endu+1.6))
+        temp_list.append((startu+1.6,endu+3))
+        temp_list.append((startu+6-1.6,endu+3))
+        temp_list.append((startu+2,endu+3-1.6))
+        temp_list.append((startu+4,endu+3-1.6))
+      
+        
+
+      
+      #print temp_list
+      if(len(temp_list)!=0):
+        dwg.add(dwg.polygon(temp_list,fill='black'))
+      startu=startu+5
+      #print startu,endu
+    endu=endu+5
+    startu=0
+  dwg.save() 
+  browser=webbrowser.get('firefox')
+  browser.open_new('file://' + os.path.realpath("test.svg")) 
+
+
 
 
       
@@ -151,3 +264,5 @@ if(sys.argv[1] == 'dot'):
   intensity_dot(image)
 elif(sys.argv[1] == 'triangle'):
   intensity_triangle(image)
+elif(sys.argv[1]=='hexagon'):
+  intensity_hexagon(image)
