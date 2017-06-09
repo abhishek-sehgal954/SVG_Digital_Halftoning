@@ -1,1 +1,1 @@
-Raster_to_SVG_halftone.py - just simply run the file using python Raster_to_SVG_halftone.py dot/triangle (command line input).(Make sure the image test.jpg is in the same directory as your code or you can provide the complete directory of the image in the code).
+Raster_to_SVG_halftone.py - just simply run the file using python Raster_to_SVG_halftone.py dot/triangle/hexagon (command line input).(Make sure the image test.jpg is in the same directory as your code or you can provide the complete directory of the image in the code).
