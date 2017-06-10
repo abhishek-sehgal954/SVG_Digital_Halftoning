@@ -252,17 +252,15 @@ def intensity_hexagon(image):
   browser.open_new('file://' + os.path.realpath("test.svg")) 
 
 
-
-
-      
-
-
-fname = 'test.jpg'
-image = Image.open(fname)
-image = Image.open(fname).convert('L')
-if(sys.argv[1] == 'dot'):
-  intensity_dot(image)
-elif(sys.argv[1] == 'triangle'):
-  intensity_triangle(image)
-elif(sys.argv[1]=='hexagon'):
-  intensity_hexagon(image)
+def main():
+  fname = 'test.jpg'
+  image = Image.open(fname)
+  image = Image.open(fname).convert('L')
+  if(sys.argv[1] == 'dot'):
+    intensity_dot(image)
+  elif(sys.argv[1] == 'triangle'):
+    intensity_triangle(image)
+  elif(sys.argv[1]=='hexagon'):
+    intensity_hexagon(image)
+if __name__=="__main__":
+  main()
