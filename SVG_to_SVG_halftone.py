@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 import subprocess
-from Raster_to_SVG_halftone import intensity_dot, intensity_triangle, intensity_hexagon
+from Raster_to_SVG_halftone import intensity_dot, intensity_triangle, intensity_hexagon, intensity_dispersed
 
 
 p=subprocess.call(['/usr/bin/inkscape', 'test2.svg', '--export-png', 'test2.png'])
@@ -19,3 +19,5 @@ elif(sys.argv[1] == 'triangle'):
   intensity_triangle(image)
 elif(sys.argv[1]=='hexagon'):
   intensity_hexagon(image)
+elif(sys.argv[1]=='dispersed'):
+  intensity_dispersed(image)	
