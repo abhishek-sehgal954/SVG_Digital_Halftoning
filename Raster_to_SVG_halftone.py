@@ -251,6 +251,122 @@ def intensity_hexagon(image):
   browser=webbrowser.get('firefox')
   browser.open_new('file://' + os.path.realpath("test.svg")) 
 
+def intensity_dispersed(image):
+  arr=np.asarray(image)
+  mini=999
+  maxi=0
+  for i in range(len(arr)):
+    for j in range(len(arr[0])):
+      maxi=max(arr[i][j],maxi)
+      mini=min(arr[i][j],mini)
+  level=float(float(maxi-mini)/float(10));
+  brr=[[0]*len(arr[0]) for i in range(len(arr))]
+  for i in range(10):                                              #computing pixel intensity of each individual pixel on a scale of 0 to 9
+    l1=mini+level*i
+    l2=l1+level
+    for j in range(len(arr)):
+      for k in range(len(arr[0])):
+        if(arr[j][k]>=l1 and arr[j][k]<=l2):
+          brr[j][k]=i
+  dwg = svgwrite.Drawing('test.svg', profile='full',size=('70cm', '70cm'))
+  startu=0
+  endu=0
+  for i in range(len(brr)):
+    for j in range(len(brr[i])):
+      if(brr[i][j]==0):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+5)/2)),1))
+      elif(brr[i][j]==1):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+5)/2)),1))
+      elif(brr[i][j]==2):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+      elif(brr[i][j]==3):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+      elif(brr[i][j]==4):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+      elif(brr[i][j]==5):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+      elif(brr[i][j]==6):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+      elif(brr[i][j]==7):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+      elif(brr[i][j]==8):
+        dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+1)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+3)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+3)/2)),1)) 
+        #dwg.add(dwg.circle((int((startu+startu+1)/2),int((endu+endu+5)/2)),1))
+        #dwg.add(dwg.circle((int((startu+startu+3)/2),int((endu+endu+5)/2)),1))
+      startu=startu+3
+    endu=endu+3;
+    startu=0;
+  dwg.save() 
+  browser=webbrowser.get('firefox')
+  browser.open_new('file://' + os.path.realpath("test.svg")) 
+
+
+
+
+
 
 def main():
   fname = 'test.jpg'
@@ -262,5 +378,7 @@ def main():
     intensity_triangle(image)
   elif(sys.argv[1]=='hexagon'):
     intensity_hexagon(image)
+  elif(sys.argv[1]=='dispersed'):
+    intensity_dispersed(image)
 if __name__=="__main__":
   main()
