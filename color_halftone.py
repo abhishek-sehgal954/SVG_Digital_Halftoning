@@ -3,8 +3,8 @@ from PIL import Image
 import matplotlib.pyplot as plt
 def gcr(im, percentage):
     '''basic "Gray Component Replacement" function. Returns a CMYK image with 
-       percentage gray component removed from the CMY channels and put in the
-       K channel, ie. for percentage=100, (41, 100, 255, 0) >> (0, 59, 214, 41)'''
+       percentage gray component removed from the CMY halftones and put in the
+       K halftone, ie. for percentage=100, (41, 100, 255, 0) >> (0, 59, 214, 41)'''
     cmyk_im = im.convert('CMYK')
     if not percentage:
         return cmyk_im
@@ -60,19 +60,28 @@ def color_halftoning(image):
         for l in range(3):
           crr[new_i+k][new_j+l]=gray_level[brr[i][j]][k][l]
   img = Image.fromarray(crr)
-  #img.save('my.png')
-  #img.show()
-
   return img
+
+def halftoning_with_rotation(cmyk,increment_in_angle):
+  dots=[]    
+  angle=0
+  for i in range(4):
+    channel = color_halftoning(cmyk[i].rotate(angle,expand=1)).convert('L')
+    channel=channel.rotate(-angle,expand=1)
+    width_half, height_half = channel.size
+    xx=(width_half-cmyk[i].size[0]*3) / 2
+    yy=(height_half-cmyk[i].size[1]*3) / 2
+    channel = channel.crop((xx, yy, xx + cmyk[i].size[0]*3, yy + cmyk[i].size[1]*3))
+    dots.append(channel)
+    angle += increment_in_angle
+  return dots
+
 fname = 'tree.jpg'
 image = Image.open(fname)
 image=gcr(image,100)
-cmyk= image.split()         
-c = color_halftoning(cmyk[0]).convert('L')
-m = color_halftoning(cmyk[1]).convert('L')
-y = color_halftoning(cmyk[2]).convert('L')
-k = color_halftoning(cmyk[3]).convert('L')    
-new_cmyk = Image.merge('CMYK',[c,m,y,k])
+cmyk= image.split()   
+dots=halftoning_with_rotation(cmyk,15)
+new_cmyk = Image.merge('CMYK',dots)
 new_cmyk.save("output.jpg")
 new_cmyk.show()
-  
+    
