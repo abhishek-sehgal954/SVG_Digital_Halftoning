@@ -1,92 +1,131 @@
+#This program takes a raster image and produces its raster halftone using patterning algorithm.
+
+"""
+For each possible value in the image, we create and display a pattern of
+pixels that approximates that value. Remembering the concept of spatial integration, 
+if we choose the appropriate patterns we can simulate the appearance of various
+intensity levels -- even though our display can only generate a limited set
+of intensities.
+
+For example, consider a 3 x 3 pattern. It can have one of 512 different
+arrangements of pixels:  however, in terms of intensity, not all of them are
+unique.  Since the number of black pixels in the pattern determines the
+darkness of the pattern, we really have only 10 discrete intensity patterns
+(including the all-white pattern), each one having one more black pixel than
+the previous one.
+
+But which 10 patterns?  Well, we can eliminate, right off the bat, patterns
+like:
+
+     ---        X--        --X        X--
+     XXX   or   -X-   or   -X-   or   X--
+     ---        --X        X--        X--
+
+
+because if they were repeated over a large area (a common occurrence in many
+images) they would create vertical, horizontal, or diagonal lines. 
+Also, studies have shown that the patterns should form a "growth
+sequence:"  once a pixel is intensified for a particular value, it should
+remain intensified for all subsequent values.  In this fashion, each pattern
+is a superset of the previous one; this similarity between adjacent
+intensity patterns minimizes any contouring artifacts.
+
+Here is a good pattern for a 3-by-3 matrix which subscribes to the rules set
+forth above: 
+
+
+     ---   ---   ---   -X-   -XX   -XX   -XX   -XX   XXX   XXX
+     ---   -X-   -XX   -XX   -XX   -XX   XXX   XXX   XXX   XXX
+     ---   ---   ---   ---   ---   -X-   -X-   XX-   XX-   XXX
+
+
+This pattern matrix effectively simulates a screened halftone with dots of
+various sizes.  In large areas of constant value, the repetitive pattern
+formed will be mostly artifact-free.
+
+No doubt, the reader will realize that applying this patterning process to
+our image will triple its size in each direction.  Because of this,
+patterning can only be used where the display's spatial resolution is much
+greater than that of the image.
+
+Another limitation of patterning is that the effective spatial resolution is
+decreased, since a multiple-pixel "cell" is used to simulate the single,
+larger halftone dot.  The more intensity resolution we want, the larger the
+halftone cell used and, by extension, the lower the spatial resolution.  
+
+In the above example, using 3 x 3 patterning, we are able to simulate 10
+intensity levels (not a very good rendering) but we must reduce the spatial
+resolution to 1/3 of the original figure.  To get 64 intensity levels (a
+very acceptable rendering), we would have to go to an 8 x 8 pattern and an
+eight-fold decrease in spatial resolution.  And to get the full 256 levels
+of intensity in our source image, we would need a 16 x 16 pattern and would
+incur a 16-fold reduction in spatial resolution.  Because of this size
+distortion of the image, and with the development of more effective digital
+halftoning methods, patterning is only infrequently used today."""
+
+
+
 import numpy as np
-import matplotlib.pyplot as plt
 from PIL import Image
-def intensity_1(image,block_size):
-  arr=np.asarray(image)
-  size3=[[8,3,4],[6,1,2],[7,5,9]]
-  size5=[[16,21,23,19,10],[14,8,4,6,12],[22,3,1,2,24],[13,7,5,9,15],[11,18,25,20,17]]
-  size7=[[34,30,46,26,49,29,32],[38,20,24,16,22,19,41],[45,13,9,2,6,12,43],[36,11,4,1,5,10,37],[42,14,7,3,8,15,44],[40,18,23,17,25,21,39],
-       [33,28,48,27,47,31,35]]
-  dict3={}
-  dict5={}
-  dict7={}
-  for i in range(3):
-	 for j in range(3):
-		  dict3[size3[i][j]]=[i,j]
-  for i in range(5):
-	 for j in range(5):
-	   	dict5[size5[i][j]]=[i,j]
-  for i in range(7):
-	 for j in range(7):
-		  dict7[size7[i][j]]=[i,j]
 
-  brr=[[0]*len(arr[0]) for i in range(len(arr))]
-  for i in range(0,len(arr),block_size):
-    for j in range(0,len(arr[i]),block_size):
-      count=0
-      for k in range(block_size):
-        for l in range(block_size):
-          if(i+k<len(arr) and j+l<len(arr[i])):
-            if(arr[i+k][j+l]>=128):
-              count=count+1
-      for k in range(1,count+1,1):
-        if(block_size==3):
-    	   if(i+dict3[k][0]<len(arr) and j+dict3[k][1] <len(arr[i])):
-    		   brr[i+dict3[k][0]][j+dict3[k][1]]=1
-        elif(block_size==5):
-          if(i+dict5[k][0]<len(arr) and j+dict5[k][1] <len(arr[i])):
-            brr[i+dict5[k][0]][j+dict5[k][1]]=1
-        elif(block_size==7):
-          if(i+dict7[k][0]<len(arr) and j+dict7[k][1] <len(arr[i])):
-            brr[i+dict7[k][0]][j+dict7[k][1]]=1
-  plt.imshow(brr,'gray')
-  plt.show()
 
-def intensity_2(image):
-  arr=np.asarray(image)
-  mini=999
-  maxi=0
+def patterning(image):
+    #  first calcluates intensity of a pixel from 0 to 9 and the based on the intensity maps it 
+    #  to the corresponding block of 3*3 
+    #  ---   ---   ---   -X-   -XX   -XX   -XX   -XX   XXX   XXX
+    #  ---   -X-   -XX   -XX   -XX   -XX   XXX   XXX   XXX   XXX
+    #  ---   ---   ---   ---   ---   -X-   -X-   XX-   XX-   XXX
+    #  9     8     7     6     5     4     3     2     1     0  
+    #  X = 0
+    #  - = 255
+    #  Therefore intensity 0 being the blackest block.
+  arr = np.asarray(image)
+  mini = 999
+  maxi = 0
   for i in range(len(arr)):
     for j in range(len(arr[0])):
-      maxi=max(arr[i][j],maxi)
-      mini=min(arr[i][j],mini)
-  level=float(float(maxi-mini)/float(10));
-  brr=[[0]*len(arr[0]) for i in range(len(arr))]
+      maxi = max(arr[i][j],maxi)
+      mini = min(arr[i][j],mini)
+  level = float(float(maxi-mini)/float(10));
+  brr = [[0]*len(arr[0]) for i in range(len(arr))]
   for i in range(10):
-    l1=mini+level*i
-    l2=l1+level
+    l1 = mini+level*i
+    l2 = l1+level
     for j in range(len(arr)):
       for k in range(len(arr[0])):
-        if(arr[j][k]>=l1 and arr[j][k]<=l2):
+        if(arr[j][k] >= l1 and arr[j][k] <= l2):
           brr[j][k]=i
-  gray_level=[[[0,0,0],[0,0,0],[0,0,0]] for i in range(10)]
+  gray_level = [[[0,0,0],[0,0,0],[0,0,0]] for i in range(10)]
 
   gray_level[0] = [[0,0,0],[0,0,0],[0,0,0]];
-  gray_level[1] = [[0,1,0],[0,0,0],[0,0,0]];
-  gray_level[2] = [[0,1,0],[0,0,0],[0,0,1]];
-  gray_level[3] = [[1,1,0],[0,0,0],[0,0,1]];
-  gray_level[4] = [[1,1,0],[0,0,0],[1,0,1]];
-  gray_level[5]= [[1,1,1],[0,0,0],[1,0,1]];
-  gray_level[6] = [[1,1,1],[0,0,1],[1,0,1]];
-  gray_level[7] = [[1,1,1],[0,0,1],[1,1,1]];
-  gray_level[8] = [[1,1,1],[1,0,1],[1,1,1]];
-  gray_level[9] = [[1,1,1],[1,1,1],[1,1,1]];
-  crr=[[0]*(len(arr[0])*3) for i in (range(len(arr))*3)]
+  gray_level[1] = [[0,255,0],[0,0,0],[0,0,0]];
+  gray_level[2] = [[0,255,0],[0,0,0],[0,0,255]];
+  gray_level[3] = [[255,255,0],[0,0,0],[0,0,255]];
+  gray_level[4] = [[255,255,0],[0,0,0],[255,0,255]];
+  gray_level[5] = [[255,255,255],[0,0,0],[255,0,255]];
+  gray_level[6] = [[255,255,255],[0,0,255],[255,0,255]];
+  gray_level[7] = [[255,255,255],[0,0,255],[255,255,255]];
+  gray_level[8] = [[255,255,255],[255,0,255],[255,255,255]];
+  gray_level[9] = [[255,255,255],[255,255,255],[255,255,255]];
+  crr = np.zeros((len(arr)*3,len(arr[0])*3))
+  cnt=0
   for i in range(len(brr)):
+    cnt+=1
     for j in range(len(brr[i])):
-      new_i=i+2*(i-1)
-      new_j=j+2*(j-1)
+      new_i = i+2*(i-1)
+      new_j = j+2*(j-1)
       for k in range(3):
         for l in range(3):
-          crr[new_i+k][new_j+l]=gray_level[brr[i][j]][k][l]
-  plt.imshow(crr,'gray')
-  plt.show()
+          crr[new_i+k][new_j+l] = gray_level[brr[i][j]][k][l]
+  return crr
 
+def main():
+  fname = 'test.jpg'
+  image = Image.open(fname).convert('L')
+  output = patterning(image)
+  im = Image.fromarray(output)
+  im.convert('RGB').save("output.jpg")
+  im.show()
 
-fname = 'test2.jpg'
-image = Image.open(fname)
-image = Image.open(fname).convert('L')
-#intensity_1(image,3)
-#intensity_1(image,5)
-#intensity_1(image,7)
-intensity_2(image)
+if __name__=="__main__":
+  main()
