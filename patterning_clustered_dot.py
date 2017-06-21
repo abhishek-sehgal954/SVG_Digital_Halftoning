@@ -18,7 +18,7 @@ But which 10 patterns?  Well, we can eliminate, right off the bat, patterns
 like:
 
      ---        X--        --X        X--
-     XXX   or   -X-   or   -X-   or   X--
+     XXX or     -X-   or   -X-   or   X--
      ---        --X        X--        X--
 
 
@@ -43,9 +43,9 @@ This pattern matrix effectively simulates a screened halftone with dots of
 various sizes.  In large areas of constant value, the repetitive pattern
 formed will be mostly artifact-free.
 
-No doubt, the reader will realize that applying this patterning process to
-our image will triple its size in each direction.  Because of this,
-patterning can only be used where the display's spatial resolution is much
+Obviously applying this patterning process to our image will triple its 
+size in each direction.  Because of this, patterning can only be used where 
+the display's spatial resolution is much
 greater than that of the image.
 
 Another limitation of patterning is that the effective spatial resolution is
