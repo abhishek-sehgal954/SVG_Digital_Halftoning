@@ -69,17 +69,8 @@ import numpy as np
 from PIL import Image
 
 
-def patterning(image):
-    #  first calcluates intensity of a pixel from 0 to 9 and the based on the intensity maps it 
-    #  to the corresponding block of 3*3 
-    #  ---   ---   ---   -X-   -XX   -XX   -XX   -XX   XXX   XXX
-    #  ---   -X-   -XX   -XX   -XX   -XX   XXX   XXX   XXX   XXX
-    #  ---   ---   ---   ---   ---   -X-   -X-   XX-   XX-   XXX
-    #  9     8     7     6     5     4     3     2     1     0  
-    #  X = 0
-    #  - = 255
-    #  Therefore intensity 0 being the blackest block.
-  arr = np.asarray(image)
+def intensity(arr):
+  #  calcluates intensity of a pixel from 0 to 9
   mini = 999
   maxi = 0
   for i in range(len(arr)):
@@ -95,6 +86,19 @@ def patterning(image):
       for k in range(len(arr[0])):
         if(arr[j][k] >= l1 and arr[j][k] <= l2):
           brr[j][k]=i
+  return brr
+
+def patterning(image):
+    # based on the intensity maps pixel to the corresponding block of 3*3  
+    #  ---   ---   ---   -X-   -XX   -XX   -XX   -XX   XXX   XXX
+    #  ---   -X-   -XX   -XX   -XX   -XX   XXX   XXX   XXX   XXX
+    #  ---   ---   ---   ---   ---   -X-   -X-   XX-   XX-   XXX
+    #  9     8     7     6     5     4     3     2     1     0  
+    #  X = 0
+    #  - = 255
+    #  Therefore intensity 0 being the blackest block.
+  arr = np.asarray(image)
+  brr=intensity(arr)
   gray_level = [[[0,0,0],[0,0,0],[0,0,0]] for i in range(10)]
 
   gray_level[0] = [[0,0,0],[0,0,0],[0,0,0]];
