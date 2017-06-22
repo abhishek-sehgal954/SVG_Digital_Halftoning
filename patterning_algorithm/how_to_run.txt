@@ -1,0 +1,11 @@
+patterning_clustered_dot - Run the file, type "python patterning_clustered_dot.py" in the terminal.
+
+Raster_to_SVG_halftone.py - Run the file, type "python Raster_to_SVG_halftone.py clustered_dot/triangle/hexagon/dispersed_dot (command line input)" in the terminal. 
+(output is stored as output.svg)
+
+SVG_to_SVG_halftone.py - Run the file, type "python SVG_to_SVG_halftone.py clustered_dot/triangle/hexagon/dispersed_dot (command line input)" in the terminal.
+(output is stored as output.svg)
+
+color_halftone.py - Run the file, type "python color_halftone.py" in the terminal.
+
+Raster_to_SVG_color_halftone.py - Run the file, type "python Raster_to_SVG_color_halftone.py" in the terminal. (output is stored as output.svg)
