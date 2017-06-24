@@ -1,24 +1,3 @@
-"""function b=floyd(a)
-width=size(a,2);
-height=size(a,1);
-err=zeros(size(a));
-for x=1:width,
-        for y=1:height,
-                if (a(y,x)+err(y,x))<128, b(y,x)=0;
-                else b(y,x)=255; 
-                end;
-                diff=(a(y,x)+err(y,x))-b(y,x);
-                if x<width, err(y,x+1)=err(y,x+1)+diff*7/16; end;
-                if y<height, 
-                        err(y+1,x)=err(y+1,x)+diff*5/16;
-                        if x>1, err(y+1,x-1)=err(y+1,x-1)+diff*3/16; end;
-                        if x<width err(y+1,x+1)=err(y+1,x+1)+diff*1/16; end;
-                end;
-        end;
-end;
-f=figure('Position',[512,512,width,height]);
-colormap(gray(256));
-g=axes('Po"""
 import numpy as np
 from PIL import Image
 
