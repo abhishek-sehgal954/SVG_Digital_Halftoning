@@ -12,10 +12,13 @@ import svgwrite
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
+from color_halftone import gcr
+
 
 dwg = svgwrite.Drawing('output.svg',profile='full',size=('70cm','70cm'),id='f-multiply-opacity',preserveAspectRatio='xMinYMin meet')
-blend = dwg.defs.add(dwg.filter(id="B4" ,filterUnits="objectBoundingBox", x="0%", y="0%", width="100%", height="100%"))
-blend.feBlend(in_='SourceGraphic', mode='screen')
+#dwg.add(dwg.rect(insert=(0,0),size=("100%","100%"),fill='white'))
+#blend = dwg.defs.add(dwg.filter(id="B4" ,filterUnits="objectBoundingBox", x="0%", y="0%", width="100%", height="100%"))
+#blend.feBlend(in_='BackgroundImage',in2="SourceGraphic", mode='multiply')
 
 def intensity_dot(image,color):
   arr = np.asarray(image)
@@ -51,7 +54,7 @@ def intensity_dot(image,color):
 
   for i in range(len(brr)):
     for j in range(len(brr[i])):
-        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+5)/2)),gray_level[brr[i][j]],fill=color,opacity='0.5',filter='url(#B4)'))       
+        dwg.add(dwg.circle((int((startu+startu+5)/2),int((endu+endu+5)/2)),gray_level[brr[i][j]],fill=color,filter='url(#B4)',style="mix-blend-mode: multiply;"))       
         startu = startu+5                                                                                 
     endu = endu+5
     startu = 0
@@ -61,9 +64,12 @@ def intensity_dot(image,color):
 def main():
   fname = 'tree_small.jpg'
   image = Image.open(fname)
-  cmyk= image.split()  
+  cmyk = image.split()  
   intensity_dot(cmyk[0],'cyan')
   intensity_dot(cmyk[1],'magenta')
   intensity_dot(cmyk[2],'yellow')
+  
+ 
+
 if __name__=="__main__":
   main()
