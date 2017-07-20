@@ -52,7 +52,7 @@ def halftone(im, cmyk, sample, scale):
     return dots
 
 def main():
-    im = Image.open("taj.jpg")
+    im = Image.open("tree.jpg")
     cmyk = gcr(im, 0)
     dots = halftone(im, cmyk, 10, 1)
     im.show()
