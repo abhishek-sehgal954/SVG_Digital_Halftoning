@@ -1,7 +1,9 @@
 # Google/PSU Summer of Code 2017 project: 
 # SVG Digital Halftoning
 Mentoring Organization: Portland State University
+
 Mentor: Bart Massey
+
 Student: Abhishek Sehgal
 
 
