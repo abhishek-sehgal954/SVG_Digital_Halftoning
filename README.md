@@ -37,12 +37,20 @@ So what we did is, we mapped our intensity level to
 
 3. Then using python library svgwrite we created the SVG halftone.
 
+###### vector halftone using patterning algorithm
+
+![patterning](https://user-images.githubusercontent.com/10050718/28525415-cad2fabc-70a1-11e7-8d8c-99adbc10db0c.png)
+
 
 # Ordered dithering algorithm
 
 
 In ordered dithering each dot in the source image must be mapped to a pixel on the display device on a one-to-one basis.  Accordingly, the patterning concept was redefined so that instead of plotting the whole pattern for each image dot, THE IMAGE DOT IS MAPPED ONLY TO ONE PIXEL IN THE PATTERN. Returning to our example of a 3 x 3 pattern, this means that we
 would be mapping NINE image dots into this pattern.
+
+###### vector halftone using ordered dithering algorithm
+
+![ordered_dithering](https://user-images.githubusercontent.com/10050718/28525499-128687d4-70a2-11e7-9c8f-c786ac743f47.png)
 
 
 # Error diffusion algorithm
@@ -52,10 +60,25 @@ After considerable research, it was found that a set of techniques known as erro
 
 Error diffusion is very simple to describe. For each point in our image, we first find the closest intensity (or color) available. We then calculate the difference between the image value at that point and that nearest available intensity/color: this difference is our error value. Now we divide up the error value and distribute it to some of the neighboring image areas which we have not visited (or processed) yet. When we get to these later dots, we add in the portions of error values which were distributed there from the preceding dots, and clip the cumulative value to an allowed range if needed. This new, modified value now becomes the image value that we use for processing this point.
 
+###### vector halftone using error diffusion algorithm
+
+![error_diffusion](https://user-images.githubusercontent.com/10050718/28525586-5911cfb0-70a2-11e7-8126-2f51227c1d7f.png)
+
 
 # Newsprint
 
 
 A halftone pattern similar to GIMP's newsprint filter is created using ImageStat. Block by block mean is calculated and each block is mapped to ellipse.
+
+###### raster halftone of halftone pattern similar to GIMP's newsprint
+
+![newsprint_raster](https://user-images.githubusercontent.com/10050718/28525733-cb0f2f4a-70a2-11e7-9fd4-6f4f5966ab29.png)
+
+###### vector halftone of halftone pattern newsprint(not exactly the desired output, but currently working on it) 
+
+![newsprint_vector](https://user-images.githubusercontent.com/10050718/28525756-ebaf5c8e-70a2-11e7-8cde-623da9a964f1.png)
+
+![newsprint_vector2](https://user-images.githubusercontent.com/10050718/28525801-1187e5fc-70a3-11e7-9268-18afb790871c.png)
+
 
 
