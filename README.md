@@ -34,6 +34,7 @@ So what we did is, we mapped our intensity level to
  b. Triangle
  c. Hexagon. 
 0 mapped to the maximum area Circle/Triangle/Hexagon. 
+
 3. Then using python library svgwrite we created the SVG halftone.
 
 
