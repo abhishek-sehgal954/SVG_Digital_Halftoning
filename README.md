@@ -14,6 +14,9 @@ Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimen
 This project aims to create scalable halftone patterns.
 
 
+Following algorithms were used and modified to produce vector halftones.
+
+
 # Patterning algorithm
 
 
