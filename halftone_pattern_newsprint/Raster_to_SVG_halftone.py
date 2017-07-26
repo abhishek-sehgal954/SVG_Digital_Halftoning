@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 import svgwrite
-import Image, ImageDraw, ImageStat
+from PIL import Image, ImageDraw, ImageStat
 
 
 dwg = svgwrite.Drawing('output.svg',profile='full',size=('30cm','30cm'),id='f-multiply-opacity',preserveAspectRatio='xMinYMin meet')
@@ -54,9 +54,9 @@ def halftone(im, cmyk, sample, scale):
                 if(count==1):
                   dwg.add(dwg.ellipse(((2*x_pos+box_edge)/2,(2*y_pos+box_edge)/2),(box_edge-5,box_edge-5),fill='cyan',style="mix-blend-mode: multiply;")) 
                 elif(count==2):
-                  dwg.add(dwg.ellipse(((2*x_pos+box_edge)/2,(2*y_pos+box_edge)/2),(box_edge-5,box_edge-5),fill='magenta',style="mix-blend-mode: multiply;"))
+                  dwg.add(dwg.ellipse(((2*x_pos+box_edge)/2,(2*y_pos+box_edge)/2),(box_edge-5,box_edge-5),fill='magenta',style="mix-blend-mode: multiply;",transform = ("rotate(1.5)")))
                 elif(count==3):
-                  dwg.add(dwg.ellipse(((2*x_pos+box_edge)/2,(2*y_pos+box_edge)/2),(box_edge-5,box_edge-5),fill='yellow',style="mix-blend-mode: multiply;"))
+                  dwg.add(dwg.ellipse(((2*x_pos+box_edge)/2,(2*y_pos+box_edge)/2),(box_edge-5,box_edge-5),fill='yellow',style="mix-blend-mode: multiply;",transform = ("rotate(3)")))
                 
                 #draw.ellipse((x_pos, y_pos, x_pos + box_edge, y_pos + box_edge), fill=255)
         #half_tone = half_tone.rotate(-angle, expand=1)
