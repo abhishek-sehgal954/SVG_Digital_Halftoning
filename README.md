@@ -81,4 +81,7 @@ A halftone pattern similar to GIMP's newsprint filter is created using ImageStat
 ![newsprint_vector2](https://user-images.githubusercontent.com/10050718/28525801-1187e5fc-70a3-11e7-9268-18afb790871c.png)
 
 
-
+## Work remaining
+1. Ask users to change dot size for halftone filter.
+2. Adding feature of allowing moving of particular monochrome screen.
+3. Add more filters (for ex. Benday dots)
